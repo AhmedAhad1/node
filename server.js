@@ -23,7 +23,7 @@ const TourSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Name is required'],
-    unique: true,
+    // unique: true,
   },
   price: Number,
   rating: Number,
@@ -34,10 +34,13 @@ const Tour = new mongoose.model('tour', TourSchema);
 const testTour = new Tour({
   name: 'the Forest hiker',
   price: 120,
-  rating: 40,
+  rating: 400,
 });
 
-testTour.save();
+testTour
+  .save()
+  .then((data) => console.log('success'))
+  .catch((err) => console.log(err));
 const port = 8000;
 
 app.listen(port, () => {
