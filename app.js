@@ -4,9 +4,9 @@ const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
-if (process.env.NODE_ENV === 'development') {
-  console.log('hello from development');
-}
+// if (process.env.NODE_ENV === 'development') {
+//   console.log('hello from development');
+// }
 
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
