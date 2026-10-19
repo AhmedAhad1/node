@@ -10,6 +10,7 @@ router
 router
   .route('/:id')
   .get(tourController.getTour)
+  .put(tourController.updateWholeTour)
   .patch(tourController.updateTour)
   .delete(tourController.deleteTour);
 

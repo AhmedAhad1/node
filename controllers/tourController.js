@@ -52,10 +52,42 @@ exports.createTour = async (req, res) => {
   }
 };
 
-exports.updateTour = (req, res) => {
-  res.status(200).send({
-    message: 'patched',
-  });
+exports.updateTour = async (req, res) => {
+  try {
+    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).send({
+      message: 'patched',
+      tour,
+    });
+  } catch (err) {
+    res.json({
+      message: err,
+    });
+  }
+};
+
+exports.updateWholeTour = async (req, res) => {
+  try {
+    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      status: 'put method',
+      data: {
+        tour,
+      },
+    });
+  } catch (err) {
+    res.status(400).send({
+      message: err,
+    });
+  }
 };
 
 exports.deleteTour = (req, res) => {
