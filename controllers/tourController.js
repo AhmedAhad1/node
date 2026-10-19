@@ -90,9 +90,17 @@ exports.updateWholeTour = async (req, res) => {
   }
 };
 
-exports.deleteTour = (req, res) => {
-  res.status(204).send({
-    status: 'success',
-    data: null,
-  });
+exports.deleteTour = async (req, res) => {
+  try {
+    const tour = await Tour.findByIdAndDelete(req.params.id);
+
+    res.status(204).send({
+      status: 'deleted',
+      data: null,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err,
+    });
+  }
 };
