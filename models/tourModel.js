@@ -6,8 +6,24 @@ const TourSchema = mongoose.Schema({
     required: [true, 'Name is required'],
     unique: true,
   },
+  duration: {
+    type: Number,
+    // required: [true],
+  },
+  maxGroupSize: Number,
+  difficulty: String,
+  ratingsAverage: Number,
+  ratingsQuantity: Number,
   price: Number,
-  rating: Number,
+  summary: String,
+  description: String,
+  imageCover: String,
+  images: [String],
+  startDates: [Date],
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 // same here for "new" keyword if u want to use
