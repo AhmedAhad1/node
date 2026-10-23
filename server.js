@@ -7,8 +7,9 @@ const mongoose = require('mongoose');
 const app = require('./app');
 
 let DB;
-
-// console.log(process.env.NODE_ENV);
+// //////////////
+console.log(process.env.NODE_ENV);
+//////////////
 
 process.env.NODE_ENV === 'production'
   ? (DB = process.env.DATABASE.replace(

@@ -2,10 +2,49 @@ const Tour = require('../models/tourModel');
 
 exports.getAllTours = async (req, res) => {
   try {
-    const allTours = await Tour.find();
+    const queryObj = { ...req.query };
+
+    const excludeFields = ['page', 'sort', 'limit', 'fields'];
+
+    excludeFields.forEach((el) => delete queryObj[el]);
+
+    let queryStr = JSON.stringify(queryObj);
+
+    queryStr = JSON.parse(
+      queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`),
+    );
+
+    // **** app.set('query parser', 'extended');' needs to be used for [gte]
+
+    // 1. regualr query
+    let query = Tour.find(queryStr); //1. object paisi 2. shajai nilam 3. shajano data pathailam await diye
+
+    // 2. sorting
+
+    if (req.query.sort) {
+      // sorting with 2 or more values
+      const sortBy = req.query.sort.split(',').join(' ');
+
+      query = query.sort(sortBy);
+    } else {
+      // if no sort query params is there we can default something
+      query = query.sort('-price');
+    }
+
+    if (req.query.limit) {
+      const limit = req.query.limit.split(',').join(' ');
+      query = query.select(limit);
+    } else {
+      query = query.select('-__v'); //excluding a field by default
+    }
+
+    const allTours = await query;
+
+    // console.log(allTours);
 
     res.status(200).json({
       status: 'success',
+      results: allTours.length,
       data: {
         tours: allTours,
       },

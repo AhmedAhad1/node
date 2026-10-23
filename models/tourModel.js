@@ -9,6 +9,7 @@ const TourSchema = mongoose.Schema({
   duration: {
     type: Number,
     // required: [true],
+    // select: false, hiding the field
   },
   maxGroupSize: Number,
   difficulty: String,
